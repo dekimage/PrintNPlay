@@ -33,12 +33,20 @@ export interface ExternalLink {
   image?: string;
 }
 
+export type GameKind = "physical" | "digital";
+
 export interface Game {
   id: string;
   slug: string;
   title: string;
   tagline?: string;
   description: string;
+  /** From Contentful `gameType`: Physical or Digital. Defaults to physical if unset. */
+  kind: GameKind;
+  /** Optional card/list image; falls back to mainImage in UI when absent */
+  thumbnail?: string;
+  /** Optional extra bio (plain text). Shown in addition to the main description when set. */
+  bio?: string;
   category?: Category;
   tags?: Tag[];
   authors?: Author[];

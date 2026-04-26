@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { NewsletterForm } from "@/components/NewsletterForm"
 import { SocialIcons } from "@/components/SocialIcons"
@@ -11,9 +12,13 @@ export function Footer() {
           {/* Logo */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-                <span className="text-black font-bold text-sm">P&P</span>
-              </div>
+              <Image
+                src={SITE.logo}
+                alt={SITE.name}
+                width={120}
+                height={40}
+                className="h-8 w-auto max-w-[120px] object-contain object-left"
+              />
               <div className="font-bold text-lg">{SITE.name}</div>
             </Link>
             <p className="text-white/60 text-sm">Creating small, fast, and fun TTRPG experiences for everyone.</p>

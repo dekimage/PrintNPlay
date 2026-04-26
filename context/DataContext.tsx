@@ -5,6 +5,8 @@ import type { Game, Post, Category, Tag, Author, Artist } from "@/lib/models";
 
 interface DataContextType {
   games: Game[];
+  physicalGames: Game[];
+  digitalGames: Game[];
   posts: Post[];
   categories: Category[];
   tags: Tag[];
@@ -33,37 +35,57 @@ interface DataProviderProps {
 }
 
 export function DataProvider({ children, initialData }: DataProviderProps) {
+  const games: Game[] = Array.isArray(initialData?.games) ? initialData.games : [];
+  const posts: Post[] = Array.isArray(initialData?.posts) ? initialData.posts : [];
+  const categories: Category[] = Array.isArray(initialData?.categories)
+    ? initialData.categories
+    : [];
+  const tags: Tag[] = Array.isArray(initialData?.tags) ? initialData.tags : [];
+  const authors: Author[] = Array.isArray(initialData?.authors)
+    ? initialData.authors
+    : [];
+  const artists: Artist[] = Array.isArray(initialData?.artists)
+    ? initialData.artists
+    : [];
+
   const getGameBySlug = (slug: string) => {
-    return initialData.games.find((game) => game.slug === slug);
+    return games.find((game) => game.slug === slug);
   };
 
   const getPostBySlug = (slug: string) => {
-    return initialData.posts.find((post) => post.slug === slug);
+    return posts.find((post) => post.slug === slug);
   };
 
   const getCategoryBySlug = (slug: string) => {
-    return initialData.categories.find((category) => category.slug === slug);
+    return categories.find((category) => category.slug === slug);
   };
 
   const getTagBySlug = (slug: string) => {
-    return initialData.tags.find((tag) => tag.slug === slug);
+    return tags.find((tag) => tag.slug === slug);
   };
 
   const getAuthorById = (id: string) => {
-    return initialData.authors.find((author) => author.id === id);
+    return authors.find((author) => author.id === id);
   };
 
   const getArtistById = (id: string) => {
-    return initialData.artists.find((artist) => artist.id === id);
+    return artists.find((artist) => artist.id === id);
   };
 
+  const physicalGames = games.filter(
+    (g) => (g.kind ?? "physical") === "physical"
+  );
+  const digitalGames = games.filter((g) => g.kind === "digital");
+
   const value: DataContextType = {
-    games: initialData.games,
-    posts: initialData.posts,
-    categories: initialData.categories,
-    tags: initialData.tags,
-    authors: initialData.authors,
-    artists: initialData.artists,
+    games,
+    physicalGames,
+    digitalGames,
+    posts,
+    categories,
+    tags,
+    authors,
+    artists,
     getGameBySlug,
     getPostBySlug,
     getCategoryBySlug,
@@ -81,6 +103,22 @@ export function useGames() {
     throw new Error("useGames must be used within a DataProvider");
   }
   return context.games;
+}
+
+export function usePhysicalGames() {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error("usePhysicalGames must be used within a DataProvider");
+  }
+  return context.physicalGames;
+}
+
+export function useDigitalGames() {
+  const context = useContext(DataContext);
+  if (context === undefined) {
+    throw new Error("useDigitalGames must be used within a DataProvider");
+  }
+  return context.digitalGames;
 }
 
 export function useGame(slug: string) {

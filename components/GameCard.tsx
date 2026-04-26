@@ -9,6 +9,8 @@ interface GameCardProps {
 }
 
 export function GameCard({ game }: GameCardProps) {
+  const cover = game.thumbnail || game.mainImage;
+
   return (
     <Link
       href={`/games/${game.slug}`}
@@ -16,11 +18,19 @@ export function GameCard({ game }: GameCardProps) {
     >
       <div className="relative aspect-square">
         <Image
-          src={game.mainImage || "/placeholder.svg"}
+          src={cover || "/placeholder.svg"}
           alt={game.title}
           fill
           className="object-cover"
         />
+        <div className="absolute top-3 left-3">
+          <Badge
+            variant="secondary"
+            className="bg-black/70 text-white/95 border-0 text-[10px] uppercase tracking-wide"
+          >
+            {game.kind === "digital" ? "Digital" : "Physical"}
+          </Badge>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">
           <h3 className="font-bold text-xl mb-2 group-hover:text-white/90">
@@ -30,27 +40,28 @@ export function GameCard({ game }: GameCardProps) {
             <p className="text-sm text-white/80 mb-3">{game.tagline}</p>
           )}
 
-          {/* Meta Info */}
-          <div className="flex items-center gap-4 text-xs text-white/70 mb-3">
-            {game.players && (
-              <div className="flex items-center gap-1">
-                <Users className="w-3 h-3" />
-                <span>{game.players}</span>
-              </div>
-            )}
-            {game.playTime && (
-              <div className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
-                <span>{game.playTime}</span>
-              </div>
-            )}
-            {game.complexity && (
-              <div className="flex items-center gap-1">
-                <Star className="w-3 h-3" />
-                <span>{game.complexity}</span>
-              </div>
-            )}
-          </div>
+          {game.kind === "physical" && (
+            <div className="flex items-center gap-4 text-xs text-white/70 mb-3">
+              {game.players && (
+                <div className="flex items-center gap-1">
+                  <Users className="w-3 h-3" />
+                  <span>{game.players}</span>
+                </div>
+              )}
+              {game.playTime && (
+                <div className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  <span>{game.playTime}</span>
+                </div>
+              )}
+              {game.complexity && (
+                <div className="flex items-center gap-1">
+                  <Star className="w-3 h-3" />
+                  <span>{game.complexity}</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

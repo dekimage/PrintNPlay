@@ -14,6 +14,7 @@ export function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -29,7 +30,7 @@ export function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
         title: "Missing information",
         description: "Please fill in all fields",
@@ -54,7 +55,7 @@ export function ContactForm() {
           title: "Message sent!",
           description: "Thank you for your message. We'll get back to you soon.",
         })
-        setFormData({ name: "", email: "", message: "" })
+        setFormData({ name: "", email: "", subject: "", message: "" })
       } else {
         const data = await response.json()
         throw new Error(data.error || "Failed to send message")
@@ -96,6 +97,20 @@ export function ContactForm() {
           onChange={handleChange}
           className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
           placeholder="your@email.com"
+          disabled={isLoading}
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="subject">Subject</Label>
+        <Input
+          id="subject"
+          name="subject"
+          type="text"
+          value={formData.subject}
+          onChange={handleChange}
+          className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
+          placeholder="What is this about?"
           disabled={isLoading}
         />
       </div>

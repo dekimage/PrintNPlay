@@ -8,6 +8,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name too long"),
   email: z.string().email("Invalid email address"),
+  subject: z
+    .string()
+    .min(1, "Subject is required")
+    .max(200, "Subject too long"),
   message: z
     .string()
     .min(10, "Message must be at least 10 characters")
@@ -16,23 +20,38 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not set");
+      return NextResponse.json(
+        { error: "Email is not configured on the server" },
+        { status: 503 }
+      );
+    }
+
     const body = await request.json();
-    const { name, email, message } = contactSchema.parse(body);
+    const { name, email, subject, message } = contactSchema.parse(body);
+
     const ip =
       request.headers.get("x-forwarded-for") ||
       request.headers.get("x-real-ip") ||
       "Unknown";
 
-    // Send notification email to owner
+    const ownerInbox = process.env.OWNER_EMAIL || "hello@printandplay.games";
+
     await resend.emails.send({
       from: "Print & Play Contact <noreply@printandplay.games>",
-      to: process.env.OWNER_EMAIL || "hello@printandplay.games",
+      to: ownerInbox,
       replyTo: email,
-      subject: `Contact Form: Message from ${name}`,
-      html: emailTemplates.contactNotification({ name, email, message, ip }),
+      subject: `Contact: ${subject} — ${name}`,
+      html: emailTemplates.contactNotification({
+        name,
+        email,
+        subject,
+        message,
+        ip,
+      }),
     });
 
-    // Send auto-reply to the sender
     await resend.emails.send({
       from: "Print & Play Games <noreply@printandplay.games>",
       to: email,

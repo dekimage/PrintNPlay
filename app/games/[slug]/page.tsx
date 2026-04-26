@@ -58,9 +58,16 @@ export default async function GamePage({ params }: GamePageProps) {
       {/* Back Button */}
       <div className="container pt-6">
         <Button asChild variant="ghost" className="mb-4">
-          <Link href="/games" className="flex items-center gap-2">
+          <Link
+            href={
+              game.kind === "digital" ? "/games/digital" : "/games/physical"
+            }
+            className="flex items-center gap-2"
+          >
             <ArrowLeft className="w-4 h-4" />
-            Back to All Games
+            {game.kind === "digital"
+              ? "Back to digital games"
+              : "Back to physical games"}
           </Link>
         </Button>
       </div>
@@ -77,6 +84,9 @@ export default async function GamePage({ params }: GamePageProps) {
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex items-end">
           <div className="container pb-12">
+            <Badge className="mb-3 bg-white/20 text-white border-white/30">
+              {game.kind === "digital" ? "Digital" : "Physical"}
+            </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
               {game.title}
             </h1>
@@ -90,36 +100,43 @@ export default async function GamePage({ params }: GamePageProps) {
       </div>
 
       <div className="container py-12">
-        {/* Meta Bar */}
-        <div className="flex flex-wrap items-center gap-6 mb-8 p-6 bg-white/5 rounded-lg border border-white/10">
-          {game.players && (
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              <span>{game.players}</span>
-            </div>
-          )}
-          {game.playTime && (
-            <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5" />
-              <span>{game.playTime}</span>
-            </div>
-          )}
-          {game.complexity && (
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5" />
-              <span>{game.complexity}</span>
-            </div>
-          )}
-          {game.tags && game.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {game.tags.map((tag) => (
-                <Badge key={tag.id} variant="outline">
-                  {tag.name}
-                </Badge>
-              ))}
-            </div>
-          )}
-        </div>
+        {((game.kind === "physical" &&
+          (game.players || game.playTime || game.complexity)) ||
+          (game.tags && game.tags.length > 0)) && (
+          <div className="flex flex-wrap items-center gap-6 mb-8 p-6 bg-white/5 rounded-lg border border-white/10">
+            {game.kind === "physical" && (
+              <>
+                {game.players && (
+                  <div className="flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    <span>{game.players}</span>
+                  </div>
+                )}
+                {game.playTime && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5" />
+                    <span>{game.playTime}</span>
+                  </div>
+                )}
+                {game.complexity && (
+                  <div className="flex items-center gap-2">
+                    <Star className="w-5 h-5" />
+                    <span>{game.complexity}</span>
+                  </div>
+                )}
+              </>
+            )}
+            {game.tags && game.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {game.tags.map((tag) => (
+                  <Badge key={tag.id} variant="outline">
+                    {tag.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-8">
@@ -128,6 +145,15 @@ export default async function GamePage({ params }: GamePageProps) {
               <h2 className="text-2xl font-bold mb-4">About This Game</h2>
               <RichTextRenderer content={game.description} />
             </div>
+
+            {game.bio && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Bio</h2>
+                <p className="text-white/85 whitespace-pre-wrap leading-relaxed">
+                  {game.bio}
+                </p>
+              </div>
+            )}
 
             {/* Credits */}
             {(game.authors && game.authors.length > 0) ||
@@ -282,6 +308,7 @@ export default async function GamePage({ params }: GamePageProps) {
           <RelatedGames
             currentGameId={game.id}
             category={game.category?.name}
+            kind={game.kind}
           />
         </div>
       </div>
@@ -298,8 +325,12 @@ export default async function GamePage({ params }: GamePageProps) {
             image: game.mainImage,
             url: `https://printandplay.example/games/${game.slug}`,
             genre: game.category?.name,
-            numberOfPlayers: game.players,
-            playTime: game.playTime,
+            ...(game.kind === "physical"
+              ? {
+                  numberOfPlayers: game.players,
+                  playTime: game.playTime,
+                }
+              : {}),
           }),
         }}
       />

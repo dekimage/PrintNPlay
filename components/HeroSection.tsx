@@ -1,12 +1,14 @@
 "use client";
 
 import { GameCarousel } from "@/components/GameCarousel";
-import { useGames } from "@/context/DataContext";
+import { useGames, usePhysicalGames } from "@/context/DataContext";
 import { SITE } from "@/lib/config";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
-  const games = useGames();
+  const physical = usePhysicalGames();
+  const all = useGames();
+  const games = physical.length > 0 ? physical : all;
 
   return (
     <section

@@ -1,30 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GameCarousel } from "@/components/GameCarousel";
 import { SocialIcons } from "@/components/SocialIcons";
-import { useGames } from "@/context/DataContext";
+import { useDigitalGames, usePhysicalGames } from "@/context/DataContext";
 import { SITE } from "@/lib/config";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showGamesDropdown, setShowGamesDropdown] = useState(false);
-  const games = useGames();
+  const physicalGames = usePhysicalGames();
+  const digitalGames = useDigitalGames();
+
+  const previewMax = 8;
+  const physicalPreview = physicalGames.slice(0, previewMax);
+  const digitalPreview = digitalGames.slice(0, previewMax);
 
   return (
-    <nav className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/10">
-      <div className="container">
+    <nav className="sticky top-0 z-[200] w-full border-b border-zinc-800 bg-zinc-950 text-white shadow-sm shadow-black/40">
+      <div className="container relative">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-black font-bold text-sm">P&P</span>
-            </div>
+            <Image
+              src={SITE.logo}
+              alt={SITE.name}
+              width={120}
+              height={40}
+              className="h-8 w-auto max-w-[120px] object-contain object-left"
+              priority
+            />
             <div>
               <div className="font-bold text-lg">{SITE.name}</div>
               <div className="text-xs text-white/60 hidden sm:block">
@@ -40,31 +50,83 @@ export function NavBar() {
               onMouseEnter={() => setShowGamesDropdown(true)}
               onMouseLeave={() => setShowGamesDropdown(false)}
             >
-              <button className="flex items-center gap-1 hover:text-white/80 transition-colors">
-                Our Games
+              <button
+                type="button"
+                className="flex items-center gap-1.5 py-1 hover:text-white/80 transition-colors"
+                aria-expanded={showGamesDropdown}
+                aria-haspopup="true"
+              >
+                Games
                 <ChevronDown className="w-4 h-4" />
               </button>
 
               <AnimatePresence>
                 {showGamesDropdown && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 mt-2 w-96 bg-black/95 backdrop-blur-sm border border-white/10 rounded-lg p-4 shadow-xl"
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.18 }}
+                    className="absolute left-0 right-0 top-full z-[250] w-full pt-2 sm:left-1/2 sm:w-[min(96vw,1180px)] sm:-translate-x-1/2"
                   >
-                    <div className="mb-3">
-                      <Link
-                        href="/games"
-                        className="text-sm text-white/60 hover:text-white transition-colors"
-                      >
-                        View All Games →
-                      </Link>
+                    <div className="max-h-[min(85vh,680px)] overflow-y-auto overscroll-y-contain rounded-2xl border border-zinc-700 bg-zinc-950 p-4 shadow-2xl shadow-black/60 sm:p-5">
+                      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                          Browse games
+                        </span>
+                        <Link
+                          href="/games"
+                          className="text-sm font-medium text-white/85 hover:text-white"
+                        >
+                          All games overview →
+                        </Link>
+                      </div>
+                      <div className="grid min-h-[300px] grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+                        <div className="min-w-0">
+                          <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
+                            <h3 className="text-base font-bold text-white">
+                              Physical games
+                            </h3>
+                            <Link
+                              href="/games/physical"
+                              className="shrink-0 text-sm text-white/55 hover:text-white"
+                            >
+                              View all →
+                            </Link>
+                          </div>
+                          <p className="mb-2 text-xs text-white/40">
+                            Print and play at the table — scroll the row to see
+                            more
+                          </p>
+                          <GameCarousel
+                            games={physicalPreview}
+                            variant="nav"
+                            emptyLabel="No physical games yet — add some in Contentful"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
+                            <h3 className="text-base font-bold text-white">
+                              Digital games
+                            </h3>
+                            <Link
+                              href="/games/digital"
+                              className="shrink-0 text-sm text-white/55 hover:text-white"
+                            >
+                              View all →
+                            </Link>
+                          </div>
+                          <p className="mb-2 text-xs text-white/40">
+                            Digital-only titles — scroll the row to see more
+                          </p>
+                          <GameCarousel
+                            games={digitalPreview}
+                            variant="nav"
+                            emptyLabel="No digital games yet — set gameType to Digital in Contentful"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <GameCarousel
-                      games={games.slice(0, 6)}
-                      variant="dropdown"
-                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -117,7 +179,7 @@ export function NavBar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-black/95 backdrop-blur-sm border-t border-white/10"
+            className="lg:hidden max-h-[min(100dvh,32rem)] overflow-y-auto overscroll-y-contain border-t border-zinc-800 bg-zinc-950"
           >
             <div className="container py-4 space-y-4">
               <div>
@@ -125,7 +187,7 @@ export function NavBar() {
                   className="flex items-center justify-between w-full py-2 text-left"
                   onClick={() => setShowGamesDropdown(!showGamesDropdown)}
                 >
-                  Our Games
+                  Games
                   <ChevronDown
                     className={`w-4 h-4 transition-transform ${showGamesDropdown ? "rotate-180" : ""}`}
                   />
@@ -137,35 +199,62 @@ export function NavBar() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="mt-2 space-y-3"
+                      className="mt-2 space-y-4"
                     >
                       <Link
                         href="/games"
                         className="block p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors text-center font-medium"
                         onClick={() => setIsOpen(false)}
                       >
-                        View All Games
+                        All games overview
                       </Link>
-                      <div className="grid grid-cols-2 gap-3">
-                        {games.slice(0, 6).map((game) => (
+
+                      <div className="rounded-xl border border-white/10 bg-black/40 p-3">
+                        <div className="mb-2 flex items-center justify-between gap-2">
+                          <h4 className="text-sm font-bold text-white">
+                            Physical games
+                          </h4>
                           <Link
-                            key={game.id}
-                            href={`/games/${game.slug}`}
-                            className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
+                            href="/games/physical"
+                            className="text-xs text-white/60 hover:text-white"
                             onClick={() => setIsOpen(false)}
                           >
-                            <Image
-                              src={game.mainImage || "/placeholder.svg"}
-                              alt={game.title}
-                              width={80}
-                              height={80}
-                              className="w-full aspect-square object-cover rounded mb-2"
-                            />
-                            <div className="text-sm font-medium">
-                              {game.title}
-                            </div>
+                            View all
                           </Link>
-                        ))}
+                        </div>
+                        <p className="mb-2 text-[11px] text-white/45">
+                          Swipe sideways for more
+                        </p>
+                        <GameCarousel
+                          games={physicalPreview}
+                          variant="nav"
+                          emptyLabel="No physical games yet"
+                          onItemClick={() => setIsOpen(false)}
+                        />
+                      </div>
+
+                      <div className="rounded-xl border border-white/10 bg-black/40 p-3">
+                        <div className="mb-2 flex items-center justify-between gap-2">
+                          <h4 className="text-sm font-bold text-white">
+                            Digital games
+                          </h4>
+                          <Link
+                            href="/games/digital"
+                            className="text-xs text-white/60 hover:text-white"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            View all
+                          </Link>
+                        </div>
+                        <p className="mb-2 text-[11px] text-white/45">
+                          Swipe sideways for more
+                        </p>
+                        <GameCarousel
+                          games={digitalPreview}
+                          variant="nav"
+                          emptyLabel="No digital games yet"
+                          onItemClick={() => setIsOpen(false)}
+                        />
                       </div>
                     </motion.div>
                   )}

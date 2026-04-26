@@ -11,10 +11,72 @@ import { motion } from "framer-motion"
 
 interface GameCarouselProps {
   games: Game[]
-  variant?: "hero" | "dropdown" | "section"
+  variant?: "hero" | "dropdown" | "section" | "nav"
+  /** Shown in nav strips when the list is empty */
+  emptyLabel?: string
+  /** e.g. close mobile menu when a preview card is tapped */
+  onItemClick?: () => void
 }
 
-export function GameCarousel({ games, variant = "section" }: GameCarouselProps) {
+function NavGameStrip({
+  games,
+  emptyLabel,
+  onItemClick,
+}: {
+  games: Game[]
+  emptyLabel?: string
+  onItemClick?: () => void
+}) {
+  if (games.length === 0) {
+    return (
+      <p className="text-sm text-white/50 py-6 text-center border border-dashed border-white/15 rounded-lg">
+        {emptyLabel ?? "No games yet"}
+      </p>
+    )
+  }
+
+  return (
+    <div
+      className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 -mx-1 px-1 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      {games.map((game) => (
+        <Link
+          key={game.id}
+          href={`/games/${game.slug}`}
+          onClick={onItemClick}
+          className="group flex-shrink-0 w-[min(44vw,200px)] min-w-[140px] max-w-[200px] snap-start bg-white/5 rounded-xl border border-white/10 overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-black/30"
+        >
+          <div className="relative aspect-[4/5] w-full">
+            <Image
+              src={game.thumbnail || game.mainImage || "/placeholder.svg"}
+              alt={game.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 44vw, 200px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-3 pt-10">
+              <h4 className="font-bold text-sm leading-tight line-clamp-2 group-hover:text-white">
+                {game.title}
+              </h4>
+              {game.tagline && (
+                <p className="text-xs text-white/75 mt-1 line-clamp-2">{game.tagline}</p>
+              )}
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+export function GameCarousel({
+  games,
+  variant = "section",
+  emptyLabel,
+  onItemClick,
+}: GameCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const scroll = (direction: "left" | "right") => {
@@ -27,27 +89,13 @@ export function GameCarousel({ games, variant = "section" }: GameCarouselProps) 
     }
   }
 
-  if (variant === "dropdown") {
+  if (variant === "nav" || variant === "dropdown") {
     return (
-      <div className="grid grid-cols-2 gap-3">
-        {games.map((game) => (
-          <Link
-            key={game.id}
-            href={`/games/${game.slug}`}
-            className="group p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-all duration-300"
-          >
-            <Image
-              src={game.mainImage || "/placeholder.svg"}
-              alt={game.title}
-              width={120}
-              height={120}
-              className="w-full aspect-square object-cover rounded mb-2"
-            />
-            <div className="text-sm font-medium group-hover:text-white/90">{game.title}</div>
-            {game.tagline && <div className="text-xs text-white/60 mt-1">{game.tagline}</div>}
-          </Link>
-        ))}
-      </div>
+      <NavGameStrip
+        games={games}
+        emptyLabel={emptyLabel}
+        onItemClick={onItemClick}
+      />
     )
   }
 
@@ -94,7 +142,12 @@ export function GameCarousel({ games, variant = "section" }: GameCarouselProps) 
               className="group block w-64 bg-white/5 rounded-lg border border-white/10 overflow-hidden hover:bg-white/10 transition-all duration-300 hover:scale-105"
             >
               <div className="relative aspect-square">
-                <Image src={game.mainImage || "/placeholder.svg"} alt={game.title} fill className="object-cover" />
+                <Image
+                  src={game.thumbnail || game.mainImage || "/placeholder.svg"}
+                  alt={game.title}
+                  fill
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="font-bold text-lg mb-1 group-hover:text-white/90">{game.title}</h3>
@@ -106,8 +159,8 @@ export function GameCarousel({ games, variant = "section" }: GameCarouselProps) 
                 <div className="p-4">
                   <div className="flex flex-wrap gap-1">
                     {game.tags.slice(0, 3).map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs">
-                        {tag}
+                      <Badge key={tag.id} variant="outline" className="text-xs">
+                        {tag.name}
                       </Badge>
                     ))}
                   </div>

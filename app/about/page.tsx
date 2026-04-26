@@ -9,15 +9,9 @@ export const metadata: Metadata = {
 
 const teamMembers = [
   {
-    name: "Alex Chen",
-    role: "Game Designer & Founder",
-    bio: "Passionate about creating accessible TTRPG experiences that can be enjoyed in under an hour.",
-    image: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Morgan Taylor",
-    role: "Artist & Creative Director",
-    bio: "Brings games to life with stunning artwork and intuitive visual design.",
+    name: "Andreja Popovikj",
+    role: "Game Designer & Founder · Artist & Creative Director",
+    bio: "Passionate about creating accessible TTRPG experiences that can be enjoyed in under an hour, and about bringing them to life with strong artwork and intuitive visual design.",
     image: "/placeholder.svg?height=200&width=200",
   },
 ]
@@ -67,7 +61,7 @@ export default function AboutPage() {
 
         <div>
           <h2 className="text-3xl font-bold mb-8 text-center">Meet the Team</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 max-w-lg mx-auto">
             {teamMembers.map((member) => (
               <div key={member.name} className="text-center">
                 <div className="relative w-48 h-48 mx-auto mb-4 rounded-full overflow-hidden">

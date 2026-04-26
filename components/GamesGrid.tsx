@@ -5,9 +5,16 @@ import { useGames, useCategories, useTags } from "@/context/DataContext";
 import { GameCard } from "@/components/GameCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { GameKind } from "@/lib/models";
 
-export function GamesGrid() {
-  const games = useGames();
+interface GamesGridProps {
+  /** If set, only list games of this kind (both still use the same content model). */
+  kind?: GameKind;
+}
+
+export function GamesGrid({ kind }: GamesGridProps) {
+  const allGames = useGames();
+  const games = kind ? allGames.filter((g) => g.kind === kind) : allGames;
   const categories = useCategories();
   const tags = useTags();
 

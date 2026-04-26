@@ -2,6 +2,8 @@ export const SITE = {
   name: "Print & Play",
   tagline: "Small, Fast and Fun TTRPG Games",
   url: process.env.SITE_URL || "http://localhost:3000",
+  /** Brand mark in /public (swap to `/logo.png` if you prefer the other asset) */
+  logo: "/logo1.png" as const,
 };
 
 export const LINKS = {

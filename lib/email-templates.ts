@@ -3,6 +3,7 @@ export const emailTemplates = {
   contactNotification: (data: {
     name: string;
     email: string;
+    subject: string;
     message: string;
     ip?: string;
   }) => `
@@ -20,6 +21,7 @@ export const emailTemplates = {
         <div style="background: white; padding: 15px; border-radius: 5px; margin: 15px 0;">
           <p><strong>👤 Name:</strong> ${data.name}</p>
           <p><strong>📧 Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+          <p><strong>✉️ Subject:</strong> ${data.subject}</p>
           <p><strong>🕒 Timestamp:</strong> ${new Date().toLocaleString()}</p>
           ${data.ip ? `<p><strong>🌐 IP Address:</strong> ${data.ip}</p>` : ""}
         </div>
