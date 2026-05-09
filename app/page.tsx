@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/HeroSection"
 import { WelcomeSection } from "@/components/WelcomeSection"
 import { LatestGamesSection } from "@/components/LatestGamesSection"
-import { VideoTutorialSection } from "@/components/VideoTutorialSection"
+// import { VideoTutorialSection } from "@/components/VideoTutorialSection"
 import { CommunitySection } from "@/components/CommunitySection"
 
 export default function HomePage() {
@@ -10,7 +10,7 @@ export default function HomePage() {
       <HeroSection />
       <WelcomeSection />
       <LatestGamesSection />
-      <VideoTutorialSection />
+      {/* <VideoTutorialSection /> */}
       <CommunitySection />
     </>
   )

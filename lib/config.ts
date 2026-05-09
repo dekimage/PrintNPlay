@@ -1,10 +1,20 @@
 export const SITE = {
-  name: "Print & Play",
-  tagline: "Small, Fast and Fun TTRPG Games",
+  name: "PrintN'Play",
+  tagline: "Paper & Pixels",
   url: process.env.SITE_URL || "http://localhost:3000",
   /** Brand mark in /public (swap to `/logo.png` if you prefer the other asset) */
   logo: "/logo1.png" as const,
 };
+
+/** Home hero: featured Contentful game cover + Steam CTA (swap URLs when ready) */
+export const HOME_HERO = {
+  featuredGameSlug: "unwelcome-guests",
+  steamWishlistUrl:
+    process.env.NEXT_PUBLIC_STEAM_WISHLIST_URL ??
+    "https://store.steampowered.com/",
+  /** Replace with `/public/your-preview.gif` or another URL when you have the final asset */
+  previewGifUrl: "https://media.giphy.com/media/26BRvIyZyFyTsIYUo/giphy.gif",
+} as const;
 
 export const LINKS = {
   discord: "https://discord.gg/printandplay",
@@ -17,11 +27,18 @@ export const LINKS = {
   youtube: "https://youtube.com/@printandplaygames",
 };
 
+/** Manually ordered slugs for the home “Most Popular” section. */
+export const MOST_POPULAR_GAME_SLUGS = [
+  "swoa",
+  "birthplace-of-evil",
+  "dumb-squad",
+] as const;
+
 export const FAQ_ENTRIES = [
   {
-    question: "What are Print & Play games?",
+    question: "What are PrintN'Play games?",
     answer:
-      "Print & Play games are tabletop games that you can download, print at home, and play immediately. They typically require minimal components and setup, making them perfect for quick gaming sessions.",
+      "PrintN'Play games are tabletop games that you can download, print at home, and play immediately. They typically require minimal components and setup, making them perfect for quick gaming sessions.",
   },
   {
     question: "Do I need special equipment to play?",

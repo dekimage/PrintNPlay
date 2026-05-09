@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { GamesGrid } from "@/components/GamesGrid";
 
 export const metadata: Metadata = {
-  title: "Digital Games | Print & Play",
+  title: "Digital Games | PrintN'Play",
   description: "Discover our digital-only games, managed from Contentful.",
 };
 

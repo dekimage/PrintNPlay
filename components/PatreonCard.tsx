@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Heart, Star, Gift } from "lucide-react";
+import { PatreonIcon } from "@/components/BrandIcons";
+import { Star, Gift } from "lucide-react";
 import { LINKS } from "@/lib/config";
 
 export function PatreonCard() {
@@ -11,7 +12,7 @@ export function PatreonCard() {
     >
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
-          <Heart className="w-8 h-8 text-white" />
+          <PatreonIcon className="w-8 h-8 text-white" />
         </div>
         <div>
           <h3 className="text-2xl font-bold group-hover:text-white/90">
@@ -22,8 +23,8 @@ export function PatreonCard() {
       </div>
 
       <p className="text-white/80 mb-6">
-        Support Print & Play Games and get exclusive access to patron-only
-        games, early releases, behind-the-scenes content, and special rewards.
+        Support PrintN'Play Games and get exclusive access to patron-only games,
+        early releases, behind-the-scenes content, and special rewards.
       </p>
 
       <div className="flex items-center gap-6 text-sm text-white/70">

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { MessageCircle, Users, Gamepad2 } from "lucide-react";
+import { DiscordIcon } from "@/components/BrandIcons";
+import { Users, Gamepad2 } from "lucide-react";
 import { LINKS } from "@/lib/config";
 
 export function DiscordCard() {
@@ -11,7 +12,7 @@ export function DiscordCard() {
     >
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center border border-white/20">
-          <MessageCircle className="w-8 h-8 text-white" />
+          <DiscordIcon className="w-8 h-8 text-white" />
         </div>
         <div>
           <h3 className="text-2xl font-bold group-hover:text-white/90">

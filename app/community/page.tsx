@@ -4,8 +4,8 @@ import { CommunityCard } from "@/components/CommunityCard";
 import { LINKS } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Community | Print & Play",
-  description: "Join the Print & Play community on Discord, Patreon, and more",
+  title: "Community | PrintN'Play",
+  description: "Join the PrintN'Play community on Discord, Patreon, and more",
 };
 
 const communityLinks = [

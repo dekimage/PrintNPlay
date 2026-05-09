@@ -35,7 +35,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${game.title} | Print & Play`,
+    title: `${game.title} | PrintN'Play`,
     description: game.tagline || game.description.substring(0, 160),
     openGraph: {
       title: game.title,

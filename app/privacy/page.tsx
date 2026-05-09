@@ -1,16 +1,19 @@
-import type { Metadata } from "next"
-import { SectionHeader } from "@/components/SectionHeader"
+import type { Metadata } from "next";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Print & Play",
-  description: "Privacy policy for Print & Play Games",
-}
+  title: "Privacy Policy | PrintN'Play",
+  description: "Privacy policy for PrintN'Play Games",
+};
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen py-16">
       <div className="container max-w-4xl">
-        <SectionHeader title="Privacy Policy" subtitle="How we collect, use, and protect your information" />
+        <SectionHeader
+          title="Privacy Policy"
+          subtitle="How we collect, use, and protect your information"
+        />
 
         <div className="prose prose-invert prose-lg max-w-none">
           <p className="text-white/60 mb-8">
@@ -19,8 +22,9 @@ export default function PrivacyPage() {
 
           <h2>Information We Collect</h2>
           <p>
-            We collect information you provide directly to us, such as when you create an account, subscribe to our
-            newsletter, contact us, or interact with our services. This may include:
+            We collect information you provide directly to us, such as when you
+            create an account, subscribe to our newsletter, contact us, or
+            interact with our services. This may include:
           </p>
           <ul>
             <li>Name and email address</li>
@@ -39,19 +43,24 @@ export default function PrivacyPage() {
 
           <h2>Information Sharing</h2>
           <p>
-            We do not sell, trade, or otherwise transfer your personal information to third parties without your
-            consent, except as described in this policy. We may share your information:
+            We do not sell, trade, or otherwise transfer your personal
+            information to third parties without your consent, except as
+            described in this policy. We may share your information:
           </p>
           <ul>
-            <li>With service providers who assist us in operating our website</li>
+            <li>
+              With service providers who assist us in operating our website
+            </li>
             <li>When required by law or to protect our rights</li>
             <li>In connection with a business transfer or acquisition</li>
           </ul>
 
           <h2>Data Security</h2>
           <p>
-            We implement appropriate security measures to protect your personal information against unauthorized access,
-            alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+            We implement appropriate security measures to protect your personal
+            information against unauthorized access, alteration, disclosure, or
+            destruction. However, no method of transmission over the internet is
+            100% secure.
           </p>
 
           <h2>Your Rights</h2>
@@ -65,19 +74,22 @@ export default function PrivacyPage() {
 
           <h2>Cookies and Tracking</h2>
           <p>
-            We use cookies and similar tracking technologies to improve your experience on our website. You can control
-            cookie settings through your browser preferences.
+            We use cookies and similar tracking technologies to improve your
+            experience on our website. You can control cookie settings through
+            your browser preferences.
           </p>
 
           <h2>Changes to This Policy</h2>
           <p>
-            We may update this privacy policy from time to time. We will notify you of any changes by posting the new
-            policy on this page and updating the "last updated" date.
+            We may update this privacy policy from time to time. We will notify
+            you of any changes by posting the new policy on this page and
+            updating the "last updated" date.
           </p>
 
           <h2>Contact Us</h2>
           <p>
-            If you have any questions about this privacy policy, please contact us at{" "}
+            If you have any questions about this privacy policy, please contact
+            us at{" "}
             <a href="/contact" className="text-white hover:text-white/80">
               our contact page
             </a>
@@ -86,5 +98,5 @@ export default function PrivacyPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

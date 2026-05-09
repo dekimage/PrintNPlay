@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { GamesGrid } from "@/components/GamesGrid";
 
 export const metadata: Metadata = {
-  title: "Physical Games | Print & Play",
+  title: "Physical Games | PrintN'Play",
   description:
     "Browse our print-and-play tabletop games — print at home and play.",
 };

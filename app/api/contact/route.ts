@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       console.error("RESEND_API_KEY is not set");
       return NextResponse.json(
         { error: "Email is not configured on the server" },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     const ownerInbox = process.env.OWNER_EMAIL || "hello@printandplay.games";
 
     await resend.emails.send({
-      from: "Print & Play Contact <noreply@printandplay.games>",
+      from: "PrintN'Play Contact <noreply@printandplay.games>",
       to: ownerInbox,
       replyTo: email,
       subject: `Contact: ${subject} — ${name}`,
@@ -53,9 +53,9 @@ export async function POST(request: NextRequest) {
     });
 
     await resend.emails.send({
-      from: "Print & Play Games <noreply@printandplay.games>",
+      from: "PrintN'Play Games <noreply@printandplay.games>",
       to: email,
-      subject: "Thank you for contacting Print & Play Games",
+      subject: "Thank you for contacting PrintN'Play Games",
       html: emailTemplates.contactAutoReply({ name }),
     });
 
@@ -66,13 +66,13 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: error.errors[0].message },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { error: "Failed to send message" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

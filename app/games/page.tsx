@@ -4,7 +4,7 @@ import { GamesGrid } from "@/components/GamesGrid";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "All Games | Print & Play",
+  title: "All Games | PrintN'Play",
   description:
     "Browse our physical print-and-play games and our digital game catalog.",
 };
@@ -16,7 +16,7 @@ export default function GamesPage() {
         <div>
           <SectionHeader
             title="All games"
-            subtitle="Physical and digital titles from Print & Play"
+            subtitle="Physical and digital titles from PrintN'Play"
           />
           <p className="text-center text-white/60 mb-10 max-w-2xl mx-auto">
             Use{" "}

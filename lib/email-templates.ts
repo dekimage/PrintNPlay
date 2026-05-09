@@ -79,7 +79,7 @@ export const emailTemplates = {
         </div>
         
         <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 12px; color: #6c757d;">
-          <p>Best regards,<br>The Print & Play Games Team</p>
+          <p>Best regards,<br>The PrintN'Play Games Team</p>
           <p>This is an automated message. Please do not reply to this email.</p>
         </div>
       </div>
@@ -94,11 +94,11 @@ export const emailTemplates = {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome to Print & Play Newsletter</title>
+      <title>Welcome to PrintN'Play Newsletter</title>
     </head>
     <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-        <h2 style="color: #28a745; margin-top: 0;">🎉 Welcome to Print & Play!</h2>
+        <h2 style="color: #28a745; margin-top: 0;">🎉 Welcome to PrintN'Play!</h2>
         
         <p>Great news! You've successfully subscribed to our newsletter.</p>
         
@@ -123,7 +123,7 @@ export const emailTemplates = {
         
         <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 12px; color: #6c757d;">
           <p>You can unsubscribe at any time by clicking the link in our emails.</p>
-          <p>Best regards,<br>The Print & Play Games Team</p>
+          <p>Best regards,<br>The PrintN'Play Games Team</p>
         </div>
       </div>
     </body>

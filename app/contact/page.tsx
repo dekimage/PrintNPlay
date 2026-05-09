@@ -1,12 +1,12 @@
-import type { Metadata } from "next"
-import { SectionHeader } from "@/components/SectionHeader"
-import { ContactForm } from "@/components/ContactForm"
-import { Mail, MessageCircle, MapPin } from "lucide-react"
+import type { Metadata } from "next";
+import { SectionHeader } from "@/components/SectionHeader";
+import { ContactForm } from "@/components/ContactForm";
+import { Mail, MessageCircle, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact | Print & Play",
-  description: "Get in touch with the Print & Play Games team",
-}
+  title: "Contact | PrintN'Play",
+  description: "Get in touch with the PrintN'Play Games team",
+};
 
 export default function ContactPage() {
   return (
@@ -31,7 +31,9 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <p className="text-white/80">hello@printandplay.games</p>
-                    <p className="text-white/60 text-sm">We typically respond within 24 hours</p>
+                    <p className="text-white/60 text-sm">
+                      We typically respond within 24 hours
+                    </p>
                   </div>
                 </div>
 
@@ -40,7 +42,9 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold mb-1">Discord</h3>
                     <p className="text-white/80">Join our community server</p>
-                    <p className="text-white/60 text-sm">Get real-time support from our team and community</p>
+                    <p className="text-white/60 text-sm">
+                      Get real-time support from our team and community
+                    </p>
                   </div>
                 </div>
 
@@ -49,7 +53,9 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold mb-1">Location</h3>
                     <p className="text-white/80">Remote Team</p>
-                    <p className="text-white/60 text-sm">We work with creators worldwide</p>
+                    <p className="text-white/60 text-sm">
+                      We work with creators worldwide
+                    </p>
                   </div>
                 </div>
               </div>
@@ -66,12 +72,18 @@ export default function ContactPage() {
             </div>
 
             <div className="p-6 bg-white/5 rounded-lg border border-white/10">
-              <h3 className="text-lg font-semibold mb-3">Before You Contact Us</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                Before You Contact Us
+              </h3>
               <p className="text-white/80 mb-3">
-                For faster support, please check our FAQ section first. Many common questions are answered there, and
-                you might find what you're looking for immediately.
+                For faster support, please check our FAQ section first. Many
+                common questions are answered there, and you might find what
+                you're looking for immediately.
               </p>
-              <a href="/faq" className="text-white hover:text-white/80 underline">
+              <a
+                href="/faq"
+                className="text-white hover:text-white/80 underline"
+              >
                 View FAQ →
               </a>
             </div>
@@ -79,5 +91,5 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

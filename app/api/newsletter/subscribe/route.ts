@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     console.log("📧 OWNER_EMAIL:", process.env.OWNER_EMAIL || "NOT SET");
     console.log(
       "📧 RESEND_AUDIENCE_ID:",
-      process.env.RESEND_AUDIENCE_ID || "NOT SET"
+      process.env.RESEND_AUDIENCE_ID || "NOT SET",
     );
 
     const body = await request.json();
@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
     console.log("📤 Sending welcome email to subscriber...");
     try {
       const welcomeResult = await resend.emails.send({
-        from: "Print & Play Games <noreply@printandplay.games>",
+        from: "PrintN'Play Games <noreply@printandplay.games>",
         to: email,
-        subject: "Welcome to Print & Play Games Newsletter! 🎲",
+        subject: "Welcome to PrintN'Play Games Newsletter! 🎲",
         html: emailTemplates.newsletterWelcome({ email }),
       });
       console.log("✅ Welcome email sent:", welcomeResult);
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     console.log("📤 Sending notification email to owner...");
     try {
       const notificationResult = await resend.emails.send({
-        from: "Print & Play <noreply@printandplay.games>",
+        from: "PrintN'Play <noreply@printandplay.games>",
         to: process.env.OWNER_EMAIL || "hello@printandplay.games",
         subject: `New Newsletter Subscriber: ${email}`,
         html: emailTemplates.newsletterNotification({ email, ip }),
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       console.log(
-        "⚠️ No RESEND_AUDIENCE_ID configured, skipping audience addition"
+        "⚠️ No RESEND_AUDIENCE_ID configured, skipping audience addition",
       );
     }
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
       console.error("📝 Validation error:", error.errors);
       return NextResponse.json(
         { error: "Invalid email address" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

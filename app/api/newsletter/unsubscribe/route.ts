@@ -29,16 +29,16 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: "Print & Play Games <noreply@printandplay.games>",
+      from: "PrintN'Play Games <noreply@printandplay.games>",
       to: email,
-      subject: "You've been unsubscribed from Print & Play Games",
+      subject: "You've been unsubscribed from PrintN'Play Games",
       html: `
         <!DOCTYPE html>
         <html>
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Unsubscribed from Print & Play</title>
+          <title>Unsubscribed from PrintN'Play</title>
         </head>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
             </div>
             
             <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 12px; color: #6c757d;">
-              <p>Best regards,<br>The Print & Play Games Team</p>
+              <p>Best regards,<br>The PrintN'Play Games Team</p>
               <p>If you didn't request this unsubscribe, please contact us.</p>
             </div>
           </div>
@@ -75,13 +75,13 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Invalid email address" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { error: "Failed to unsubscribe" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

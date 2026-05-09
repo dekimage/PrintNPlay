@@ -30,7 +30,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} | Print & Play`,
+    title: `${post.title} | PrintN'Play`,
     description: post.excerpt || post.body.substring(0, 160),
     openGraph: {
       title: post.title,
@@ -125,11 +125,11 @@ export default async function PostPage({ params }: PostPageProps) {
             datePublished: post.publishedDate,
             author: {
               "@type": "Person",
-              name: post.authorName || "Print & Play Games",
+              name: post.authorName || "PrintN'Play Games",
             },
             publisher: {
               "@type": "Organization",
-              name: "Print & Play Games",
+              name: "PrintN'Play Games",
             },
           }),
         }}
