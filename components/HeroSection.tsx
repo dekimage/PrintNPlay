@@ -1,24 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import { useGame } from "@/context/DataContext";
 import { HOME_HERO } from "@/lib/config";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
   const featured = useGame(HOME_HERO.featuredGameSlug);
-  const heroCover = featured?.mainImage?.trim()
-    ? featured.mainImage
-    : "/hero.png";
-  const headline =
-    featured?.title?.trim() || "Featured game";
+  const titleForAlt = featured?.title?.trim() || "Featured game";
 
   return (
     <section
       className="relative isolate flex h-[800px] w-full items-center justify-center overflow-x-hidden overflow-y-auto bg-black bg-cover bg-center bg-no-repeat py-8 sm:py-10"
-      style={{ backgroundImage: `url(${heroCover})` }}
+      style={{ backgroundImage: "url(/hero-bg.png)" }}
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-black/55"
+        className="pointer-events-none absolute inset-0 z-0 bg-black/25"
         aria-hidden
       />
 
@@ -30,9 +27,16 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
             className="order-1 flex min-w-0 flex-col justify-center"
           >
-            <h1 className="mb-4 text-4xl font-bold leading-tight text-white sm:mb-6 sm:text-5xl md:text-6xl lg:text-7xl">
-              {headline}
-            </h1>
+            <h1 className="sr-only">{titleForAlt}</h1>
+            <Image
+              src="/hero-logo.png"
+              alt={titleForAlt}
+              width={1200}
+              height={400}
+              priority
+              className="mb-4 w-full max-w-full h-auto object-contain object-left sm:mb-6"
+              sizes="(max-width: 999px) 100vw, min(50vw, 36rem)"
+            />
             <p className="mb-6 text-balance text-lg leading-relaxed text-white/95 sm:mb-8 sm:text-xl md:text-2xl">
               A Mörk Borg-inspired first-person shooter that combines brutal
               dungeon runs with narrative progression and a stylized hand-drawn
@@ -60,17 +64,28 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-2 w-full min-w-0"
+            className="order-2 flex w-full min-w-0 flex-col"
           >
             <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-white/10 shadow-lg shadow-black/40">
               {/*
               <GameCarousel games={games} variant="hero" />
               */}
-              <img
-                src={HOME_HERO.previewGifUrl}
+              <Image
+                src={HOME_HERO.previewImageSrc}
                 alt=""
-                className="h-full w-full object-cover object-center"
-                loading="eager"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 999px) 100vw, 50vw"
+                priority
+              />
+            </div>
+            <div className="mt-3 flex w-full justify-end">
+              <Image
+                src="/dosman.png"
+                alt="Dosman Games"
+                width={200}
+                height={80}
+                className="h-9 w-auto max-h-10 object-contain object-right sm:h-10 sm:max-h-11"
               />
             </div>
           </motion.div>

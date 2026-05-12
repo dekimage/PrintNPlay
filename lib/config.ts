@@ -12,8 +12,7 @@ export const HOME_HERO = {
   steamWishlistUrl:
     process.env.NEXT_PUBLIC_STEAM_WISHLIST_URL ??
     "https://store.steampowered.com/",
-  /** Replace with `/public/your-preview.gif` or another URL when you have the final asset */
-  previewGifUrl: "https://media.giphy.com/media/26BRvIyZyFyTsIYUo/giphy.gif",
+  previewImageSrc: "/gif-image.png",
 } as const;
 
 export const LINKS = {

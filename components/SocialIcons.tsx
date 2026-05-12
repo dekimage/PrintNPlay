@@ -1,69 +1,81 @@
-import Link from "next/link"
-import { MessageCircle, Heart, Youtube, Instagram, ShoppingBag, Download } from "lucide-react"
-import { LINKS } from "@/lib/config"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { LINKS } from "@/lib/config";
+import { cn } from "@/lib/utils";
+import {
+  DiscordIcon,
+  PatreonIcon,
+  YoutubeIcon,
+  InstagramIcon,
+  ItchIoIcon,
+  DriveThruRPGIcon,
+} from "@/components/SocialBrandIcons";
+import type { ComponentType } from "react";
 
 interface SocialIconsProps {
-  size?: "sm" | "md" | "lg"
-  className?: string
+  size?: "sm" | "md" | "lg";
+  className?: string;
 }
 
+const ICONS: Record<
+  "sm" | "md" | "lg",
+  { icon: string; pad: string }
+> = {
+  sm: { icon: "w-[18px] h-[18px]", pad: "w-8 h-8" },
+  md: { icon: "w-5 h-5", pad: "w-10 h-10" },
+  lg: { icon: "w-6 h-6", pad: "w-12 h-12" },
+};
+
 export function SocialIcons({ size = "md", className }: SocialIconsProps) {
-  const iconSize = {
-    sm: "w-4 h-4",
-    md: "w-5 h-5",
-    lg: "w-6 h-6",
-  }[size]
+  const { icon: iconCls, pad: padCls } = ICONS[size];
 
-  const containerSize = {
-    sm: "w-8 h-8",
-    md: "w-10 h-10",
-    lg: "w-12 h-12",
-  }[size]
-
-  const socialLinks = [
+  const socialLinks: {
+    name: string;
+    href: string;
+    Icon: ComponentType<{ className?: string }>;
+    color: string;
+  }[] = [
     {
       name: "Discord",
       href: LINKS.discord,
-      icon: MessageCircle,
-      color: "hover:text-indigo-400",
+      Icon: DiscordIcon,
+      color: "hover:text-[#5865F2]",
     },
     {
       name: "Patreon",
       href: LINKS.patreon,
-      icon: Heart,
-      color: "hover:text-orange-400",
+      Icon: PatreonIcon,
+      color: "hover:text-[#FF424D]",
     },
     {
       name: "YouTube",
       href: LINKS.youtube,
-      icon: Youtube,
-      color: "hover:text-red-400",
+      Icon: YoutubeIcon,
+      color: "hover:text-[#FF0000]",
     },
     {
       name: "Instagram",
       href: LINKS.instagram,
-      icon: Instagram,
-      color: "hover:text-pink-400",
+      Icon: InstagramIcon,
+      color: "hover:text-[#E4405F]",
     },
     {
       name: "DriveThruRPG",
       href: LINKS.drivethru,
-      icon: ShoppingBag,
-      color: "hover:text-green-400",
+      Icon: DriveThruRPGIcon,
+      color: "hover:text-[#7AB942]",
     },
     {
       name: "Itch.io",
       href: LINKS.itch,
-      icon: Download,
-      color: "hover:text-red-300",
+      Icon: ItchIoIcon,
+      color: "hover:text-[#FA5C5C]",
     },
-  ]
+  ];
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
       {socialLinks.map((social) => {
-        const Icon = social.icon
+        const Icon = social.Icon;
         return (
           <Link
             key={social.name}
@@ -71,16 +83,16 @@ export function SocialIcons({ size = "md", className }: SocialIconsProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "flex items-center justify-center rounded-full bg-white/10 text-white/70 transition-all duration-300 hover:bg-white/20 hover:scale-110",
-              containerSize,
-              social.color,
+              "flex items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:scale-110 hover:bg-white/20",
+              padCls,
+              social.color
             )}
             aria-label={social.name}
           >
-            <Icon className={iconSize} />
+            <Icon className={iconCls} />
           </Link>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
