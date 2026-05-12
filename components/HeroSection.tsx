@@ -70,13 +70,12 @@ export function HeroSection() {
               {/*
               <GameCarousel games={games} variant="hero" />
               */}
-              <Image
-                src={HOME_HERO.previewImageSrc}
-                alt=""
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 999px) 100vw, 50vw"
-                priority
+              <iframe
+                src={`https://www.youtube.com/embed/${HOME_HERO.youtubeHeroVideoId}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`}
+                title={`${titleForAlt} — video`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
               />
             </div>
             <div className="mt-3 flex w-full justify-end">

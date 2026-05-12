@@ -11,8 +11,9 @@ export const HOME_HERO = {
   featuredGameSlug: "unwelcome-guests",
   steamWishlistUrl:
     process.env.NEXT_PUBLIC_STEAM_WISHLIST_URL ??
-    "https://store.steampowered.com/",
-  previewImageSrc: "/gif-image.png",
+    "https://store.steampowered.com/app/4391580/Unwelcome_Guests/",
+  /** Hero embed: youtube.com/watch?v=… ID only */
+  youtubeHeroVideoId: "Ffz3ACr-CKo",
 } as const;
 
 export const LINKS = {
