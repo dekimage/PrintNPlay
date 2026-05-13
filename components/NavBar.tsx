@@ -33,9 +33,9 @@ export function NavBar() {
             <Image
               src={SITE.logo}
               alt={SITE.name}
-              width={51}
-              height={60}
-              className="h-8 w-auto max-w-[120px] object-contain object-left"
+              width={102}
+              height={120}
+              className="h-12 w-auto shrink-0 object-contain object-left"
               priority
             />
             <div>
