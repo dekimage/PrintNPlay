@@ -2,8 +2,8 @@ export const SITE = {
   name: "PrintN'Play",
   tagline: "Paper & Pixels",
   url: process.env.SITE_URL || "http://localhost:3000",
-  /** Brand mark in /public (swap to `/logo.png` if you prefer the other asset) */
-  logo: "/logo1.png" as const,
+  /** Brand mark in /public */
+  logo: "/logo.svg" as const,
 };
 
 /** Home hero: featured Contentful game cover + Steam CTA (swap URLs when ready) */

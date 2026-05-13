@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useGame } from "@/context/DataContext";
-import { HOME_HERO } from "@/lib/config";
+import { HOME_HERO, SITE } from "@/lib/config";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
@@ -27,15 +27,17 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
             className="order-1 flex min-w-0 flex-col justify-center"
           >
-            <h1 className="sr-only">{titleForAlt}</h1>
+            <h1 className="sr-only">
+              {SITE.name} — {titleForAlt}
+            </h1>
             <Image
-              src="/hero-logo.png"
-              alt={titleForAlt}
-              width={1200}
-              height={400}
+              src={SITE.logo}
+              alt={SITE.name}
+              width={102}
+              height={120}
               priority
-              className="mb-4 w-full max-w-full h-auto object-contain object-left sm:mb-6"
-              sizes="(max-width: 999px) 100vw, min(50vw, 36rem)"
+              className="mb-4 h-auto w-auto max-h-32 max-w-[min(100%,12rem)] object-contain object-left sm:mb-6 sm:max-h-40"
+              sizes="(max-width: 999px) 12rem, 12rem"
             />
             <p className="mb-6 text-balance text-lg leading-relaxed text-white/95 sm:mb-8 sm:text-xl md:text-2xl">
               A Mörk Borg-inspired first-person shooter that combines brutal

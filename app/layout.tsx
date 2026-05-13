@@ -19,6 +19,11 @@ const jua = Jua({
 export const metadata: Metadata = {
   title: SITE.name,
   description: SITE.tagline,
+  icons: {
+    icon: SITE.logo,
+    shortcut: SITE.logo,
+    apple: SITE.logo,
+  },
   keywords: "TTRPG, tabletop games, print and play, RPG, board games",
   authors: [{ name: SITE.name }],
   openGraph: {
