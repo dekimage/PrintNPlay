@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SectionHeader } from "@/components/SectionHeader";
 import { MessageCircle, Mail, FileText, HelpCircle } from "lucide-react";
 import Link from "next/link";
+import { LINKS } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Support | PrintN'Play",
@@ -27,7 +28,7 @@ const supportOptions = [
     title: "Discord Community",
     description: "Get help from our community and team members",
     icon: MessageCircle,
-    href: "https://discord.gg/placeholder",
+    href: LINKS.discord,
     color: "from-indigo-500 to-purple-600",
   },
   {

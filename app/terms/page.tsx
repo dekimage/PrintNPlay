@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { SectionHeader } from "@/components/SectionHeader";
+import Link from "next/link";
+import { LegalDocument, LegalSection } from "@/components/LegalDocument";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | PrintN'Play",
@@ -7,110 +8,113 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
+  const lastUpdated = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
-    <div className="min-h-screen py-16">
-      <div className="container max-w-4xl">
-        <SectionHeader
-          title="Terms & Conditions"
-          subtitle="Terms of use for PrintN'Play Games services"
-        />
+    <LegalDocument
+      title="Terms & Conditions"
+      subtitle="Terms of use for PrintN'Play Games services"
+      lastUpdated={lastUpdated}
+    >
+      <LegalSection title="Acceptance of Terms">
+        <p>
+          By accessing and using the PrintN&apos;Play Games website and
+          services, you accept and agree to be bound by the terms and provisions
+          of this agreement. If you do not agree to these terms, please do not
+          use this service.
+        </p>
+      </LegalSection>
 
-        <div className="prose prose-invert prose-lg max-w-none">
-          <p className="text-white/60 mb-8">
-            <em>Last updated: {new Date().toLocaleDateString()}</em>
-          </p>
+      <LegalSection title="Use License">
+        <p>
+          Permission is granted to temporarily download one copy of the materials
+          on PrintN&apos;Play Games&apos; website for personal, non-commercial
+          transitory viewing only. This is the grant of a license, not a transfer
+          of title. Under this license you may not:
+        </p>
+        <ul>
+          <li>Modify or copy the materials</li>
+          <li>
+            Use the materials for any commercial purpose or for any public
+            display
+          </li>
+          <li>
+            Attempt to reverse engineer any software contained on the website
+          </li>
+          <li>
+            Remove any copyright or other proprietary notations from the
+            materials
+          </li>
+        </ul>
+      </LegalSection>
 
-          <h2>Acceptance of Terms</h2>
-          <p>
-            By accessing and using PrintN'Play Games website and services, you
-            accept and agree to be bound by the terms and provision of this
-            agreement. If you do not agree to abide by the above, please do not
-            use this service.
-          </p>
+      <LegalSection title="Game Content License">
+        <p>
+          Our print-and-play games are provided under a Creative Commons license
+          that allows personal use and modification for non-commercial
+          purposes. You may:
+        </p>
+        <ul>
+          <li>Print and play our games for personal enjoyment</li>
+          <li>Share printed copies with friends and family</li>
+          <li>Modify games for personal use</li>
+        </ul>
+        <p>
+          Commercial use, redistribution, or resale of our games requires
+          explicit written permission.
+        </p>
+      </LegalSection>
 
-          <h2>Use License</h2>
-          <p>
-            Permission is granted to temporarily download one copy of the
-            materials on PrintN'Play Games' website for personal, non-commercial
-            transitory viewing only. This is the grant of a license, not a
-            transfer of title, and under this license you may not:
-          </p>
-          <ul>
-            <li>Modify or copy the materials</li>
-            <li>
-              Use the materials for any commercial purpose or for any public
-              display
-            </li>
-            <li>
-              Attempt to reverse engineer any software contained on the website
-            </li>
-            <li>
-              Remove any copyright or other proprietary notations from the
-              materials
-            </li>
-          </ul>
+      <LegalSection title="Disclaimer">
+        <p>
+          The materials on PrintN&apos;Play Games&apos; website are provided on
+          an &apos;as is&apos; basis. PrintN&apos;Play Games makes no
+          warranties, expressed or implied, and hereby disclaims and negates all
+          other warranties including, without limitation, implied warranties or
+          conditions of merchantability, fitness for a particular purpose, or
+          non-infringement of intellectual property or other violation of
+          rights.
+        </p>
+      </LegalSection>
 
-          <h2>Game Content License</h2>
-          <p>
-            Our print-and-play games are provided under a Creative Commons
-            license that allows for personal use and modification for
-            non-commercial purposes. You may:
-          </p>
-          <ul>
-            <li>Print and play our games for personal enjoyment</li>
-            <li>Share printed copies with friends and family</li>
-            <li>Modify games for personal use</li>
-          </ul>
-          <p>
-            Commercial use, redistribution, or resale of our games requires
-            explicit written permission.
-          </p>
+      <LegalSection title="Limitations">
+        <p>
+          In no event shall PrintN&apos;Play Games or its suppliers be liable
+          for any damages (including, without limitation, damages for loss of
+          data or profit, or due to business interruption) arising out of the use
+          or inability to use the materials on PrintN&apos;Play Games&apos;
+          website.
+        </p>
+      </LegalSection>
 
-          <h2>Disclaimer</h2>
-          <p>
-            The materials on PrintN'Play Games' website are provided on an 'as
-            is' basis. PrintN'Play Games makes no warranties, expressed or
-            implied, and hereby disclaims and negates all other warranties
-            including without limitation, implied warranties or conditions of
-            merchantability, fitness for a particular purpose, or
-            non-infringement of intellectual property or other violation of
-            rights.
-          </p>
+      <LegalSection title="User Content">
+        <p>
+          By submitting content to our website (including comments, reviews, or
+          feedback), you grant PrintN&apos;Play Games a non-exclusive,
+          royalty-free, perpetual license to use, modify, and display such
+          content.
+        </p>
+      </LegalSection>
 
-          <h2>Limitations</h2>
-          <p>
-            In no event shall PrintN'Play Games or its suppliers be liable for
-            any damages (including, without limitation, damages for loss of data
-            or profit, or due to business interruption) arising out of the use
-            or inability to use the materials on PrintN'Play Games' website.
-          </p>
+      <LegalSection title="Modifications">
+        <p>
+          PrintN&apos;Play Games may revise these terms of service at any time
+          without notice. By using this website, you are agreeing to be bound by
+          the then-current version of these terms of service.
+        </p>
+      </LegalSection>
 
-          <h2>User Content</h2>
-          <p>
-            By submitting content to our website (including comments, reviews,
-            or feedback), you grant PrintN'Play Games a non-exclusive,
-            royalty-free, perpetual license to use, modify, and display such
-            content.
-          </p>
-
-          <h2>Modifications</h2>
-          <p>
-            PrintN'Play Games may revise these terms of service at any time
-            without notice. By using this website, you are agreeing to be bound
-            by the then current version of these terms of service.
-          </p>
-
-          <h2>Contact Information</h2>
-          <p>
-            If you have any questions about these Terms & Conditions, please
-            contact us at{" "}
-            <a href="/contact" className="text-white hover:text-white/80">
-              our contact page
-            </a>
-            .
-          </p>
-        </div>
-      </div>
-    </div>
+      <LegalSection title="Contact Information">
+        <p>
+          If you have any questions about these Terms &amp; Conditions, please
+          contact us on{" "}
+          <Link href="/contact">our contact page</Link>.
+        </p>
+      </LegalSection>
+    </LegalDocument>
   );
 }

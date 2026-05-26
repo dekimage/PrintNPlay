@@ -17,14 +17,14 @@ export const HOME_HERO = {
 } as const;
 
 export const LINKS = {
-  discord: "https://discord.gg/printandplay",
+  discord: "https://discord.gg/nuGpQgSn4f",
   linktree: "https://linktr.ee/PrintNplay",
   patreon: "https://www.patreon.com/profile/creators?u=88434971",
   drivethru: "https://www.drivethrurpg.com/en/publisher/25790/printnplay",
   itch: "https://printnplay.itch.io/",
   instagram: "https://www.instagram.com/print_n_play_games",
   threads: "https://www.threads.com/@print_n_play_games",
-  youtube: "https://youtube.com/@printandplaygames",
+  youtube: "https://www.youtube.com/@Print_Nplay",
 };
 
 /** Manually ordered slugs for the home “Most Popular” section. */
