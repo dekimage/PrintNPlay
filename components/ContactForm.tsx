@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2, Send } from "lucide-react"
 
+const MIN_MESSAGE_LENGTH = 10
+
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -39,6 +41,15 @@ export function ContactForm() {
       return
     }
 
+    if (formData.message.trim().length < MIN_MESSAGE_LENGTH) {
+      toast({
+        title: "Message too short",
+        description: `Please write at least ${MIN_MESSAGE_LENGTH} characters in your message.`,
+        variant: "destructive",
+      })
+      return
+    }
+
     setIsLoading(true)
 
     try {
@@ -58,7 +69,9 @@ export function ContactForm() {
         setFormData({ name: "", email: "", subject: "", message: "" })
       } else {
         const data = await response.json()
-        throw new Error(data.error || "Failed to send message")
+        const detail =
+          typeof data.details === "string" ? `: ${data.details}` : ""
+        throw new Error((data.error || "Failed to send message") + detail)
       }
     } catch (error) {
       toast({
@@ -123,10 +136,14 @@ export function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           rows={5}
+          minLength={MIN_MESSAGE_LENGTH}
           className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/60 resize-none"
           placeholder="Tell us how we can help you..."
           disabled={isLoading}
         />
+        <p className="mt-1 text-xs text-white/50">
+          {formData.message.trim().length}/{MIN_MESSAGE_LENGTH} characters minimum
+        </p>
       </div>
 
       <Button type="submit" disabled={isLoading} className="w-full bg-white text-black hover:bg-white/90 font-medium">

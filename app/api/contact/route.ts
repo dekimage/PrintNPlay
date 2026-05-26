@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import { emailTemplates } from "@/lib/email-templates";
+import { EMAIL } from "@/lib/email-config";
+import { sendResendEmail } from "@/lib/resend-send";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -18,28 +20,67 @@ const contactSchema = z.object({
     .max(1000, "Message too long"),
 });
 
+function getResendErrorMessage(error: unknown): string {
+  if (error && typeof error === "object" && "message" in error) {
+    return String((error as { message: unknown }).message);
+  }
+  return "Failed to send message";
+}
+
 export async function POST(request: NextRequest) {
+  const requestId = crypto.randomUUID().slice(0, 8);
+
   try {
+    console.log(`[contact:${requestId}] POST /api/contact`);
+
     if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not set");
+      console.error(`[contact:${requestId}] RESEND_API_KEY is not set`);
       return NextResponse.json(
         { error: "Email is not configured on the server" },
         { status: 503 },
       );
     }
 
+    const ownerInbox = EMAIL.ownerInbox;
+    console.log(`[contact:${requestId}] config`, {
+      ownerInboxConfigured: Boolean(process.env.OWNER_EMAIL),
+      ownerInbox,
+      resendDomain: EMAIL.domain,
+      fromOwner: EMAIL.fromContact,
+      fromAutoReply: EMAIL.fromBrand,
+    });
+
     const body = await request.json();
-    const { name, email, subject, message } = contactSchema.parse(body);
+    const parsed = contactSchema.safeParse(body);
+
+    if (!parsed.success) {
+      const message = parsed.error.errors[0]?.message ?? "Invalid form data";
+      console.warn(`[contact:${requestId}] validation failed:`, {
+        issues: parsed.error.errors.map((issue) => ({
+          path: issue.path.join("."),
+          message: issue.message,
+        })),
+      });
+      return NextResponse.json({ error: message }, { status: 400 });
+    }
+
+    const { name, email, subject, message } = parsed.data;
 
     const ip =
       request.headers.get("x-forwarded-for") ||
       request.headers.get("x-real-ip") ||
       "Unknown";
 
-    const ownerInbox = process.env.OWNER_EMAIL || "hello@printandplay.games";
+    console.log(`[contact:${requestId}] validated`, {
+      name,
+      email,
+      subject,
+      messageLength: message.length,
+      ip,
+    });
 
-    await resend.emails.send({
-      from: "PrintN'Play Contact <noreply@printandplay.games>",
+    const ownerResult = await sendResendEmail(resend, "owner-notification", {
+      from: EMAIL.fromContact,
       to: ownerInbox,
       replyTo: email,
       subject: `Contact: ${subject} — ${name}`,
@@ -52,26 +93,35 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    await resend.emails.send({
-      from: "PrintN'Play Games <noreply@printandplay.games>",
+    const autoReplyResult = await sendResendEmail(resend, "visitor-auto-reply", {
+      from: EMAIL.fromBrand,
       to: email,
       subject: "Thank you for contacting PrintN'Play Games",
       html: emailTemplates.contactAutoReply({ name }),
     });
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Contact form error:", error);
+    console.log(`[contact:${requestId}] completed`, {
+      ownerEmailId: ownerResult?.id,
+      autoReplyEmailId: autoReplyResult?.id,
+    });
 
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.errors[0].message },
-        { status: 400 },
-      );
-    }
+    return NextResponse.json({
+      success: true,
+      ownerEmailId: ownerResult?.id,
+      autoReplyEmailId: autoReplyResult?.id,
+    });
+  } catch (error) {
+    console.error(`[contact:${requestId}] unexpected error:`, error);
+
+    const resendMessage = getResendErrorMessage(error);
+    console.error(`[contact:${requestId}] resend message:`, resendMessage);
 
     return NextResponse.json(
-      { error: "Failed to send message" },
+      {
+        error: "Failed to send message",
+        details:
+          process.env.NODE_ENV === "development" ? resendMessage : undefined,
+      },
       { status: 500 },
     );
   }

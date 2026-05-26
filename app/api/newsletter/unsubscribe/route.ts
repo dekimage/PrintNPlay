@@ -1,6 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { EMAIL } from "@/lib/email-config";
+import { emailTemplates } from "@/lib/email-templates";
+import { sendResendEmail } from "@/lib/resend-send";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -28,44 +31,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Send confirmation email to user
-    await resend.emails.send({
-      from: "PrintN'Play Games <noreply@printandplay.games>",
+    await sendResendEmail(resend, "newsletter-unsubscribe", {
+      from: EMAIL.fromBrand,
       to: email,
       subject: "You've been unsubscribed from PrintN'Play Games",
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Unsubscribed from PrintN'Play</title>
-        </head>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-            <h2 style="color: #dc3545; margin-top: 0;">👋 You've been unsubscribed</h2>
-            
-            <p>We're sorry to see you go! You've been successfully unsubscribed from our newsletter.</p>
-            
-            <div style="background: #fff3cd; padding: 15px; border-radius: 5px; border-left: 4px solid #ffc107; margin: 20px 0;">
-              <h3 style="margin-top: 0; color: #856404;">Want to stay connected?</h3>
-              <p>You can always resubscribe anytime by visiting our website and signing up again.</p>
-            </div>
-            
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="${process.env.SITE_URL || "https://printandplay.games"}" 
-                 style="background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                🎲 Visit Our Website
-              </a>
-            </div>
-            
-            <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 12px; color: #6c757d;">
-              <p>Best regards,<br>The PrintN'Play Games Team</p>
-              <p>If you didn't request this unsubscribe, please contact us.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+      html: emailTemplates.newsletterUnsubscribe(),
     });
 
     return NextResponse.json({ success: true });

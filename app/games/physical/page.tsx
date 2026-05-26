@@ -13,10 +13,10 @@ export default function PhysicalGamesPage() {
     <div className="min-h-screen py-16">
       <div className="container">
         <SectionHeader
-          title="Physical games"
-          subtitle="Our print-and-play collection — your next adventure is a few pages away"
+          title="Printable games"
+          // subtitle="Our print-and-play collection — your next adventure is a few pages away"
         />
-        <GamesGrid kind="physical" />
+        <GamesGrid kind="physical" hideFilters />
       </div>
     </div>
   );

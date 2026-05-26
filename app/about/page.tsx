@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArticleHeader,
-  ArticleSection,
   articleBodyClassName,
 } from "@/components/LegalDocument";
 
@@ -23,7 +22,7 @@ const teamMembers = [
   {
     name: "Andrej Popovski",
     role: "3D Artist",
-    bio: "A passionate gamer and 3D modeler with a special taste for low-poly stylized models. Interested in game-ready modeling optimized for indie games.",
+    bio: "A competitive gamer and 3D modeler with a special taste for low-poly stylized models. Interested in game-ready modeling optimized for indie games.",
     image: "/andrej.jpg",
   },
 ];
@@ -40,43 +39,27 @@ export default function AboutPage() {
         <div className={`${articleBodyClassName} mb-16`}>
           <p>
             PrintN&apos;Play Games was founded with a simple mission: to create
-            tabletop RPG experiences that are accessible, engaging, and can be
-            enjoyed without weeks of preparation or hours of commitment. We
-            believe that great stories and memorable adventures can happen in
-            any amount of time, whether you have 15 minutes or 2 hours.
+            tabletop and digital experiences that are accessible, engaging, and
+            can be enjoyed without weeks of preparation or hours of commitment.
+            Yep, we will never make a 60 hour long PC game. We believe that
+            great stories and memorable adventures can happen in any amount of
+            time, whether you have 15 minutes or 2 hours.
           </p>
 
           <p>
-            Our games are designed to be printed at home, require minimal setup,
-            and focus on creative storytelling over complex mechanics. We&apos;re
-            passionate about lowering the barriers to entry for TTRPG gaming
-            while maintaining the depth and creativity that makes these
-            experiences special.
+            Our digital games are designed to run on old and new PCs or to simply
+            be printed at home, require minimal setup, and focus on creative
+            storytelling over complex mechanics. We&apos;re passionate about
+            lowering the barriers to entry for TTRPG gaming while maintaining
+            the depth and creativity that makes these experiences special.
           </p>
-
-          <ArticleSection title="Our Philosophy">
-            <ul>
-              <li>
-                <strong>Small:</strong> Compact games that don&apos;t overwhelm
-                new players
-              </li>
-              <li>
-                <strong>Fast:</strong> Quick setup and play sessions that
-                respect your time
-              </li>
-              <li>
-                <strong>Fun:</strong> Engaging mechanics that prioritize
-                enjoyment over complexity
-              </li>
-            </ul>
-          </ArticleSection>
 
           <p>
             Every game we create is playtested extensively with groups of
             varying experience levels to ensure they deliver on our promise of
             being small, fast, and fun. We&apos;re committed to supporting the
-            indie TTRPG community and making our hobby more inclusive and
-            accessible.
+            indie TTRPG and digital GameDev community and making our hobbies more
+            inclusive and accessible.
           </p>
         </div>
 

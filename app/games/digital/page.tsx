@@ -13,9 +13,9 @@ export default function DigitalGamesPage() {
       <div className="container">
         <SectionHeader
           title="Digital games"
-          subtitle="Digital experiences — thumbnails, gallery art, and bios from Contentful"
+          // subtitle="Digital experiences — thumbnails, gallery art, and bios from Contentful"
         />
-        <GamesGrid kind="digital" />
+        <GamesGrid kind="digital" hideFilters />
       </div>
     </div>
   );

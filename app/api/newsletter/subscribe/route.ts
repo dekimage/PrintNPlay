@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import { emailTemplates } from "@/lib/email-templates";
+import { EMAIL } from "@/lib/email-config";
+import { sendResendEmail } from "@/lib/resend-send";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -34,8 +36,8 @@ export async function POST(request: NextRequest) {
     // Send welcome email to subscriber
     console.log("📤 Sending welcome email to subscriber...");
     try {
-      const welcomeResult = await resend.emails.send({
-        from: "PrintN'Play Games <noreply@printandplay.games>",
+      const welcomeResult = await sendResendEmail(resend, "newsletter-welcome", {
+        from: EMAIL.fromBrand,
         to: email,
         subject: "Welcome to PrintN'Play Games Newsletter! 🎲",
         html: emailTemplates.newsletterWelcome({ email }),
@@ -49,12 +51,16 @@ export async function POST(request: NextRequest) {
     // Send notification email to site owner
     console.log("📤 Sending notification email to owner...");
     try {
-      const notificationResult = await resend.emails.send({
-        from: "PrintN'Play <noreply@printandplay.games>",
-        to: process.env.OWNER_EMAIL || "hello@printandplay.games",
+      const notificationResult = await sendResendEmail(
+        resend,
+        "newsletter-owner-notification",
+        {
+          from: EMAIL.fromNewsletter,
+          to: EMAIL.ownerInbox,
         subject: `New Newsletter Subscriber: ${email}`,
         html: emailTemplates.newsletterNotification({ email, ip }),
-      });
+        },
+      );
       console.log("✅ Owner notification sent:", notificationResult);
     } catch (notificationError) {
       console.error("❌ Owner notification failed:", notificationError);

@@ -10,9 +10,11 @@ import type { GameKind } from "@/lib/models";
 interface GamesGridProps {
   /** If set, only list games of this kind (both still use the same content model). */
   kind?: GameKind;
+  /** Hide categories, tags, and results count (used on dedicated kind listing pages). */
+  hideFilters?: boolean;
 }
 
-export function GamesGrid({ kind }: GamesGridProps) {
+export function GamesGrid({ kind, hideFilters = false }: GamesGridProps) {
   const allGames = useGames();
   const games = kind ? allGames.filter((g) => g.kind === kind) : allGames;
   const categories = useCategories();
@@ -48,74 +50,78 @@ export function GamesGrid({ kind }: GamesGridProps) {
 
   return (
     <div className="space-y-8">
-      {/* Filters */}
-      <div className="space-y-4">
-        {/* Category Filter */}
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Categories</h3>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={selectedCategory === null ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(null)}
-            >
-              All Categories
-            </Button>
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={
-                  selectedCategory === category.slug ? "default" : "outline"
-                }
-                size="sm"
-                onClick={() => setSelectedCategory(category.slug)}
-                style={{
-                  backgroundColor:
-                    selectedCategory === category.slug
-                      ? category.color
-                      : undefined,
-                  borderColor: category.color,
-                }}
-              >
-                {category.name}
-              </Button>
-            ))}
-          </div>
-        </div>
+      {!hideFilters && (
+        <>
+          {/* Filters */}
+          <div className="space-y-4">
+            {/* Category Filter */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Categories</h3>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant={selectedCategory === null ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(null)}
+                >
+                  All Categories
+                </Button>
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={
+                      selectedCategory === category.slug ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => setSelectedCategory(category.slug)}
+                    style={{
+                      backgroundColor:
+                        selectedCategory === category.slug
+                          ? category.color
+                          : undefined,
+                      borderColor: category.color,
+                    }}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
 
-        {/* Tags Filter */}
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Tags</h3>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Badge
-                key={tag.id}
-                variant={
-                  selectedTags.includes(tag.slug) ? "default" : "outline"
-                }
-                className="cursor-pointer hover:bg-white/10 transition-colors"
-                onClick={() => toggleTag(tag.slug)}
-              >
-                {tag.name}
-              </Badge>
-            ))}
-          </div>
-        </div>
+            {/* Tags Filter */}
+            <div>
+              <h3 className="text-lg font-semibold mb-3">Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <Badge
+                    key={tag.id}
+                    variant={
+                      selectedTags.includes(tag.slug) ? "default" : "outline"
+                    }
+                    className="cursor-pointer hover:bg-white/10 transition-colors"
+                    onClick={() => toggleTag(tag.slug)}
+                  >
+                    {tag.name}
+                  </Badge>
+                ))}
+              </div>
+            </div>
 
-        {/* Clear Filters */}
-        {(selectedCategory || selectedTags.length > 0) && (
-          <div>
-            <Button variant="outline" size="sm" onClick={clearFilters}>
-              Clear All Filters
-            </Button>
+            {/* Clear Filters */}
+            {(selectedCategory || selectedTags.length > 0) && (
+              <div>
+                <Button variant="outline" size="sm" onClick={clearFilters}>
+                  Clear All Filters
+                </Button>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* Results Count */}
-      <div className="text-white/60">
-        Showing {filteredGames.length} of {games.length} games
-      </div>
+          {/* Results Count */}
+          <div className="text-white/60">
+            Showing {filteredGames.length} of {games.length} games
+          </div>
+        </>
+      )}
 
       {/* Games Grid */}
       {filteredGames.length > 0 ? (
@@ -128,11 +134,15 @@ export function GamesGrid({ kind }: GamesGridProps) {
         <div className="text-center py-12">
           <h3 className="text-xl font-semibold mb-2">No games found</h3>
           <p className="text-white/60 mb-4">
-            Try adjusting your filters to see more games.
+            {hideFilters
+              ? "Check back soon — new games are on the way."
+              : "Try adjusting your filters to see more games."}
           </p>
-          <Button variant="outline" onClick={clearFilters}>
-            Clear Filters
-          </Button>
+          {!hideFilters && (
+            <Button variant="outline" onClick={clearFilters}>
+              Clear Filters
+            </Button>
+          )}
         </div>
       )}
     </div>

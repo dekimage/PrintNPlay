@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ContactForm } from "@/components/ContactForm";
+import { EMAIL } from "@/lib/email-config";
 import { Mail, MessageCircle, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ export default function ContactPage() {
                   <Mail className="w-6 h-6 mt-1 text-white/60" />
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-white/80">hello@printandplay.games</p>
+                    <p className="text-white/80">{EMAIL.hello}</p>
                     <p className="text-white/60 text-sm">
                       We typically respond within 24 hours
                     </p>
