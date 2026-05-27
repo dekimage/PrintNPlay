@@ -28,7 +28,7 @@ export function WelcomeSection() {
             We are a small game development studio from North Macedonia, born
             from the world of printable TTRPG-inspired games. After a successful
             Kickstarter campaign and an award for Best One-Page RPG, we stepped
-            into digital games without leaving our tabletop roots behind. TOday
+            into digital games without leaving our tabletop roots behind. Today
             our work lives somewhere between paper and pixels, bringing together
             the best of both worlds.
           </p>

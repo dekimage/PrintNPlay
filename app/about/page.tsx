@@ -22,7 +22,7 @@ const teamMembers = [
   {
     name: "Andrej Popovski",
     role: "3D Artist",
-    bio: "A competitive gamer and 3D modeler with a special taste for low-poly stylized models. Interested in game-ready modeling optimized for indie games.",
+    bio: "A competitive gamer and 3D modeler with a special taste for low-poly stylized models.",
     image: "/andrej.jpg",
   },
 ];
@@ -47,19 +47,20 @@ export default function AboutPage() {
           </p>
 
           <p>
-            Our digital games are designed to run on old and new PCs or to simply
-            be printed at home, require minimal setup, and focus on creative
-            storytelling over complex mechanics. We&apos;re passionate about
-            lowering the barriers to entry for TTRPG gaming while maintaining
-            the depth and creativity that makes these experiences special.
+            Our digital games are designed to run on old and new PCs or to
+            simply be printed at home, require minimal setup, and focus on
+            creative storytelling over complex mechanics. We&apos;re passionate
+            about lowering the barriers to entry for TTRPG gaming while
+            maintaining the depth and creativity that makes these experiences
+            special.
           </p>
 
           <p>
             Every game we create is playtested extensively with groups of
             varying experience levels to ensure they deliver on our promise of
             being small, fast, and fun. We&apos;re committed to supporting the
-            indie TTRPG and digital GameDev community and making our hobbies more
-            inclusive and accessible.
+            indie TTRPG and digital GameDev community and making our hobbies
+            more inclusive and accessible.
           </p>
         </div>
 
