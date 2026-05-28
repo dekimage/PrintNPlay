@@ -44,7 +44,9 @@ export function NewsletterForm() {
         setEmail("")
       } else {
         const data = await response.json()
-        throw new Error(data.error || "Failed to subscribe")
+        const detail =
+          typeof data.details === "string" ? `: ${data.details}` : ""
+        throw new Error((data.error || "Failed to subscribe") + detail)
       }
     } catch (error) {
       toast({
@@ -58,18 +60,23 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
-      <div className="flex-1">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex-1 min-w-0">
         <Input
           type="email"
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
+          className="bg-white/10 border-white/20 text-white placeholder:text-white/60 w-full"
           disabled={isLoading}
+          required
         />
       </div>
-      <Button type="submit" disabled={isLoading} className="bg-white text-black hover:bg-white/90 font-medium">
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="w-full shrink-0 bg-white text-black hover:bg-white/90 font-medium sm:w-auto"
+      >
         {isLoading ? (
           <Loader2 className="w-4 h-4 animate-spin" />
         ) : (

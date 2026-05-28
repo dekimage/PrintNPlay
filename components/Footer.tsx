@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="bg-black border-t border-white/10">
       <div className="container py-16">
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid gap-12 lg:grid-cols-3">
           {/* Logo */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-4">
@@ -30,8 +30,8 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Stay Updated</h3>
             <p className="text-white/80 mb-4">
-              Get updates on newly released games and other newsletter-only
-              subscriber goodies right in your mailbox.
+              Get updates on newly released games and other subscriber goodies
+              right in your mailbox.
             </p>
             <NewsletterForm />
           </div>

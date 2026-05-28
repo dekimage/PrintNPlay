@@ -16,20 +16,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email } = unsubscribeSchema.parse(body);
 
-    // Remove from Resend audience if configured
-    if (process.env.RESEND_AUDIENCE_ID) {
-      try {
-        await resend.contacts.remove({
-          email,
-          audienceId: process.env.RESEND_AUDIENCE_ID,
-        });
-        console.log(`Removed ${email} from Resend audience`);
-      } catch (audienceError) {
-        console.error("Failed to remove from Resend audience:", audienceError);
-        // Don't fail the whole request if audience removal fails
-      }
-    }
-
     // Send confirmation email to user
     await sendResendEmail(resend, "newsletter-unsubscribe", {
       from: EMAIL.fromBrand,
