@@ -57,6 +57,14 @@ export function HeroSection() {
               >
                 Join Community
               </a>
+              <a
+                href={HOME_HERO.discordInviteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[48px] items-center justify-center px-8 py-4 border border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors shrink-0"
+              >
+                Join Discord
+              </a>
             </div>
           </motion.div>
 

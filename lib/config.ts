@@ -12,6 +12,9 @@ export const HOME_HERO = {
   steamWishlistUrl:
     process.env.NEXT_PUBLIC_STEAM_WISHLIST_URL ??
     "https://store.steampowered.com/app/4391580/Unwelcome_Guests/",
+  discordInviteUrl:
+    process.env.NEXT_PUBLIC_HERO_DISCORD_URL ??
+    "https://discord.com/invite/NyP67Zskbz",
   /** Hero embed: youtube.com/watch?v=… ID only */
   youtubeHeroVideoId: "Ffz3ACr-CKo",
 } as const;

@@ -10,6 +10,7 @@ import { GameGallery } from "@/components/GameGallery";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { RelatedGames } from "@/components/RelatedGames";
 import { getGameBySlug, getAllGames } from "@/lib/contentful";
+import { HOME_HERO } from "@/lib/config";
 
 interface GamePageProps {
   params: Promise<{ slug: string }>;
@@ -263,6 +264,39 @@ export default async function GamePage({ params }: GamePageProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {game.slug === HOME_HERO.featuredGameSlug && (
+              <div className="p-6 bg-white/5 rounded-lg border border-white/10">
+                <h3 className="text-xl font-bold mb-4">Get This Game</h3>
+                <div className="space-y-3">
+                  <Button
+                    asChild
+                    className="w-full bg-white text-black hover:bg-white/90 font-bold"
+                  >
+                    <Link
+                      href={HOME_HERO.steamWishlistUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Wishlist on Steam
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-white text-white bg-transparent hover:bg-white/10 font-bold"
+                  >
+                    <Link
+                      href={HOME_HERO.discordInviteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Join Discord
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {/* External Links */}
             {game.externalLinks && game.externalLinks.length > 0 && (
               <div className="p-6 bg-white/5 rounded-lg border border-white/10">
