@@ -16,7 +16,7 @@ export const HOME_HERO = {
     process.env.NEXT_PUBLIC_HERO_DISCORD_URL ??
     "https://discord.com/invite/NyP67Zskbz",
   /** Hero embed: youtube.com/watch?v=… ID only */
-  youtubeHeroVideoId: "Ffz3ACr-CKo",
+  youtubeHeroVideoId: "4AlDBrgB1iU",
 } as const;
 
 export const LINKS = {
